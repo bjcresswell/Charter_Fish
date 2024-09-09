@@ -1,0 +1,29 @@
+---
+title: "Wrangling data on charter fisheries"
+author: "Ben Cresswell"
+format: html
+editor: visual
+---
+
+
+
+# Packages
+```{r}
+library(tidyverse)
+```
+
+
+# To download data go to:
+https://qfish.fisheries.qld.gov.au/query/charter-catch-and-effort/table
+
+# Load data
+
+```{r}
+getwd()
+charter <- 
+  read_csv()
+```
+
+
+
+
