@@ -25,6 +25,12 @@ charter <-
   row_to_names(row_number = 1) |> # Variable names are meaningless, so remove
   clean_names() # But we want 
 head(charter)
+
+
+
+charter |>
+  rbind(names(charter))
+
 ```
 
 ```{r}
@@ -44,7 +50,6 @@ diving <- charter |>
   filter(!is.na(CalendarYear))
 
 
-usethis::use
 
 ```
 
