@@ -83,24 +83,50 @@ other_catch <-
 head(shark_catch, n = 2)
 ```
 
-
+# Pivot wide tibbles longer
 ```{r}
 shark_catch_long <- 
 shark_catch |>
-  pivot_longer(!Area, names_to = "Year", values_to = "Nos") 
+  pivot_longer(!Area, names_to = "Year", values_to = "Nos")
 
+turtle_catch_long <- 
+  turtle_catch |>
+  pivot_longer(!Area, names_to = "Year", values_to = "Nos")
 
+```
+
+# Make stats tibbles
+```{r}
+shark_stats <- 
 shark_catch_long |>
   filter(Area != "Grand Total") |>
   group_by(Year) |>
   summarise(Mean = mean(Nos, na.rm = TRUE),
             SD = sd(Nos, na.rm = TRUE)) |>
   mutate(Year = as.numeric(Year)) |>
-  ggplot(aes(x =Year, y = Mean)) +
-  geom_pointrange(aes(ymin = Mean - SD, ymax = Mean +SD)) +
-  geom_line() +
-  geom_smooth() 
+  mutate(Taxa = "Sharks")
 
-`````````
+turtle_stats <- 
+turtle_catch_long |>
+  filter(Area != "Grand Total") |>
+  group_by(Year) |>
+  summarise(Mean = mean(Nos, na.rm = TRUE),
+            SD = sd(Nos, na.rm = TRUE)) |>
+  mutate(Year = as.numeric(Year)) |>
+  mutate(Taxa = "Turtles")
+
+combine_stats <- 
+  bind_rows(shark_stats, turtle_stats)
+  
+```
+
+
+```{r}
+ggplot(data = combine_stats, aes(x =Year, y = Mean, fill = Taxa, shape = Taxa), colour = "black") +
+  geom_line() +
+  geom_pointrange(aes(ymin = Mean - SD, ymax = Mean + SD)) +
+    scale_shape_manual(values = c(23, 24))
+
+```
 
 
