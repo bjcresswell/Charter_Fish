@@ -10,6 +10,7 @@ editor: visual
 # Packages
 ```{r}
 library(tidyverse)
+library(janitor)
 ```
 
 
@@ -19,11 +20,33 @@ https://qfish.fisheries.qld.gov.au/query/charter-catch-and-effort/table
 # Load data
 
 ```{r}
-getwd()
 charter <- 
-  read_csv()
+  read_csv("../data/export.csv") |>
+  row_to_names(row_number = 1) |> # Variable names are meaningless, so remove
+  clean_names() # But we want 
+head(charter)
 ```
 
+```{r}
+combination <- charter |>
+  select(na | contains("Combination")) |>
+  row_to_names(row_number = 1) |>
+  mutate(across(is.character, as.numeric)) |>
+  filter(!is.na(CalendarYear))
+  
+combination |> rown
+
+
+diving <- charter |>
+  select(na | contains("diving")) |>
+  row_to_names(row_number = 1) |>
+  mutate(across(is.character, as.numeric)) |>
+  filter(!is.na(CalendarYear))
+
+
+usethis::use
+
+```
 
 
 
